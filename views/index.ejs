@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <% include partials/head %> 
+
+<body>
+  <!--Page Contents-->
+  <div id="invoice">
+    <!--Toolbar để in hoặc xuất file!-->
+    <div class="toolbar hidden-print">
+      <div class="text-right">
+        <button id="printInvoice" class="btn btn-info"><i class="fa fa-print"></i> In phiếu này</button>
+        <button id="getPDFfile" class="btn btn-info"><i class="fa fa-file-pdf-o"></i>Xuất ra PDF</button>
+      </div>
+      <hr>
+    </div>
+
+    <!--Hóa đơn goes here ?-->
+  <% include hoadon %> 
+
+  <!--Scripts for toolbar-->
+  <% include partials/pageScripts %>
+  </body>
+
+</html>
