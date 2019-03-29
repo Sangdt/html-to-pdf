@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var htmlPf = require('html-pdf');
+const jsdom = require('jsdom');
 var ejs = require('ejs');
 var fs = require('fs');
+const { JSDOM } = jsdom;
 //var templateString = fs.readFileSync('./views/hoadon1.html', 'utf-8');
 
   /**
@@ -12,10 +14,15 @@ var fs = require('fs');
   const getHoadonHtml = ()=>{
   var HoadonHtml = fs.readFileSync('./views/hoadon.ejs','utf-8');
   //add thêm thông tin css để file pdf tạo ra đúng chuẩn
-  var pageInfo= '<!DOCTYPE html><html><head><title>HTml to PDF</title><link rel="stylesheet" href="http://localhost:3000/stylesheets/style.css" /><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> </head><body>';
+  var pageInfo= '<!DOCTYPE html><html><head><title>HTml to PDF</title><link rel="stylesheet" href="https://html-to-pdf-fpt.herokuapp.com/stylesheets/style.css" /><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> </head><body>';
   var pageEnd = "</body></html>";
   var html= pageInfo + ejs.render(HoadonHtml)+pageEnd;
-  return html;//return html string 
+  const htmlstring = new JSDOM(html);// tạo đối tượng html để chuẩn bị thay đổi img tag
+  var img =htmlstring.window.document.getElementById("imgLOGO");// lấy thẻ img trong html 
+  img.src="https://html-to-pdf-fpt.herokuapp.com/images/Untitled.png"
+  const finalHTML=htmlstring.window.document.documentElement.outerHTML;// trả về chuổi html đã thay đổi
+  
+  return finalHTML;//return html string 
 }
 
 // Delete file pdf cũ trc khi tạo ra 1 cái mới
