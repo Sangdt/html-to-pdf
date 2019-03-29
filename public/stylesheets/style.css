@@ -1,4 +1,6 @@
-html{zoom: 0.55;}
+html{
+  zoom: 0.55;
+}
 #invoice{
   padding: 30px;
 }
